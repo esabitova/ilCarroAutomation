@@ -9,6 +9,54 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+.log
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+.png
+
+# General
+.DS_Store
+
+HELP.md
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+!.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
+
+/.mvn
+/.out
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+**/.idea
+*/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Postgres data ###
+postgres/database
