@@ -1,0 +1,4 @@
+ilcarro/qa/RegistrationTest.java
+ ilcarro.qa.RegistrationTest
+ilcarro/qa/RegistrationTestRefactored.java
+ ilcarro.qa.RegistrationTestRefactored
