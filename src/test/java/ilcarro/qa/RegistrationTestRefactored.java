@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,19 +12,10 @@ import org.testng.annotations.Test;
 import java.util.Random;
 
 public class RegistrationTestRefactored {
-    //TODO: refactor
-    //assertion
-    //TODO: @Test2 negative
-
     WebDriver wd;
-
     String firstName = "John";
     String secondName = "Doe";
     String password = "Test12345";
-
-    Random random = new Random();
-    int int_random = random.nextInt(1000000);
-    String email = firstName + secondName + int_random + "@mail.com";
 
     @BeforeMethod
     public void setUp() {
@@ -33,17 +25,40 @@ public class RegistrationTestRefactored {
     }
 
     @Test
-    public void testRegistration() throws InterruptedException {
+    public void testRegistrationPositive() throws InterruptedException {
         getSignUp();
         fillRegForm();
         selectCheckBox();
         pause(2000);
         clickSubmitBtn();
         pause(3000);
+        isLogIn();
+    }
 
-        //TODO: assertion
-//        Assert.assertEquals();
+    @Test
+    public void testRegistrationNegative() throws InterruptedException {
+        getSignUp();
+        fillIncorrectMailRegForm();
+        selectCheckBox();
+        pause(2000);
+        clickSubmitBtn();
+        pause(3000);
+        isRegistration();
+    }
 
+    public void isLogIn() {
+        WebElement regFormTitle = wd.findElement(By.xpath("//h2[contains(.,'Log in')]"));
+        Assert.assertEquals(regFormTitle.getText(), "Log in");
+    }
+
+    public void isRegistration() {
+        WebElement regFormTitle = wd.findElement(By.xpath("//h2[contains(.,'Registration')]"));
+        Assert.assertEquals(regFormTitle.getText(), "Registration");
+    }
+
+    public int randomiser() {
+        Random random = new Random();
+        return random.nextInt(1000000);
     }
 
     public void clickSubmitBtn() {
@@ -66,10 +81,13 @@ public class RegistrationTestRefactored {
 
     public void fillRegForm() {
         WebElement firstNameElement = wd.findElement(By.id("first_name"));
-        type(firstNameElement,firstName);
+        type(firstNameElement, firstName);
 
         WebElement secondNameElement = wd.findElement(By.id("second_name"));
-        type(secondNameElement,secondName);
+        type(secondNameElement, secondName);
+
+        String email = firstName + secondName + randomiser()
+                + "@mail.com";
 
         //simple log of credentials
         System.out.println("email is:" + email);
@@ -78,23 +96,38 @@ public class RegistrationTestRefactored {
         type(emailElement, email);
 
         WebElement pswdElement = wd.findElement(By.id("password"));
-        type(pswdElement,password);
+        type(pswdElement, password);
     }
 
-    public void click(WebElement element){
+    public void fillIncorrectMailRegForm() {
+        WebElement firstNameElement = wd.findElement(By.id("first_name"));
+        type(firstNameElement, firstName);
+
+        WebElement secondNameElement = wd.findElement(By.id("second_name"));
+        type(secondNameElement, secondName);
+
+        String email = firstName + secondName + randomiser()
+                + "mail.com";
+
+        WebElement emailElement = wd.findElement(By.id("email"));
+        type(emailElement, email);
+
+        WebElement pswdElement = wd.findElement(By.id("password"));
+        type(pswdElement, password);
+    }
+
+    public void click(WebElement element) {
         element.click();
     }
 
-    public void type(WebElement element,String text){
+    public void type(WebElement element, String text) {
         click(element);
         element.clear();
         element.sendKeys(text);
     }
 
-    @AfterMethod(enabled = false) //method/test cancellation
+    @AfterMethod
     public void tearDown() {
-//        wd.close(); //close only tab, but web browser close only if it was one and only window
-        wd.quit(); //close windows and web browser
-
+        wd.quit();
     }
 }

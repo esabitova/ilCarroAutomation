@@ -22,3 +22,10 @@ For details: https://chocolatey.org/packages?q=webdriver
 #Content
 1. random generated emails
 2. creating cssSelectors
+3. refactoring
+
+#Credentials for login
+password: Test12345
+email is:
+JohnDoe864905@mail.com
+JohnDoe520245@mail.com

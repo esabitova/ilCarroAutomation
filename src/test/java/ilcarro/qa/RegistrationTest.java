@@ -4,13 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import sun.security.mscapi.CPublicKey;
 
-import java.sql.SQLOutput;
 import java.util.Random;
 
 public class RegistrationTest {
@@ -71,8 +68,6 @@ public class RegistrationTest {
         click(submitBtn);
 
         Thread.sleep(3000);
-        //TODO: assertion
-//        Assert.assertEquals();
 
     }
 
