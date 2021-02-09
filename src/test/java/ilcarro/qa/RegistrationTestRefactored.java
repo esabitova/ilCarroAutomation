@@ -4,16 +4,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import sun.security.mscapi.CPublicKey;
 
-import java.sql.SQLOutput;
 import java.util.Random;
 
-public class RegistrationTest {
+public class RegistrationTestRefactored {
+    //TODO: refactor
+    //assertion
+    //TODO: @Test2 negative
+
     WebDriver wd;
 
     String firstName = "John";
@@ -28,28 +29,46 @@ public class RegistrationTest {
     public void setUp() {
         wd = new ChromeDriver();
         wd.manage().window().maximize();
-//        wd.get("https://ilcarro-dev-v1.firebaseapp.com/");
         wd.navigate().to("https://ilcarro-dev-v1.firebaseapp.com/"); //the same as wd.get
     }
 
     @Test
     public void testRegistration() throws InterruptedException {
-        //open registration form
-//        wd.findElement(By.cssSelector("[href=\"/signup\"]")).click();
-        wd.findElement(By.cssSelector("[href='/signup']")).click(); //difference in " and '
+        getSignUp();
+        fillRegForm();
+        selectCheckBox();
+        pause(2000);
+        clickSubmitBtn();
+        pause(3000);
 
-        //fill the registration form
-//        wd.findElement(By.cssSelector("#first_name")).click(); //with cssSelector
+        //TODO: assertion
+//        Assert.assertEquals();
+
+    }
+
+    public void clickSubmitBtn() {
+        WebElement submitBtn = wd.findElement(By.cssSelector("[type='submit']"));
+        click(submitBtn);
+    }
+
+    public void pause(int millis) throws InterruptedException {
+        Thread.sleep(millis);
+    }
+
+    public void selectCheckBox() {
+        WebElement checkBox = wd.findElement(By.id("check_policy"));
+        click(checkBox);
+    }
+
+    public void getSignUp() {
+        wd.findElement(By.cssSelector("[href='/signup']")).click();
+    }
+
+    public void fillRegForm() {
         WebElement firstNameElement = wd.findElement(By.id("first_name"));
-//        firstNameElement.click();
-        click(firstNameElement);
-        firstNameElement.clear();
-        firstNameElement.sendKeys(firstName);
+        type(firstNameElement,firstName);
 
         WebElement secondNameElement = wd.findElement(By.id("second_name"));
-//        click(secondNameElement);
-//        secondNameElement.clear();
-//        secondNameElement.sendKeys(secondName);
         type(secondNameElement,secondName);
 
         //simple log of credentials
@@ -60,20 +79,6 @@ public class RegistrationTest {
 
         WebElement pswdElement = wd.findElement(By.id("password"));
         type(pswdElement,password);
-
-        //select Check box
-        WebElement checkBox = wd.findElement(By.id("check_policy"));
-        click(checkBox);
-
-        //Click on Yalla Button
-        Thread.sleep(2000);
-        WebElement submitBtn = wd.findElement(By.cssSelector("[type='submit']"));
-        click(submitBtn);
-
-        Thread.sleep(3000);
-        //TODO: assertion
-//        Assert.assertEquals();
-
     }
 
     public void click(WebElement element){
@@ -86,11 +91,10 @@ public class RegistrationTest {
         element.sendKeys(text);
     }
 
-    @AfterMethod (enabled = false) //method/test cancellation
+    @AfterMethod(enabled = false) //method/test cancellation
     public void tearDown() {
 //        wd.close(); //close only tab, but web browser close only if it was one and only window
         wd.quit(); //close windows and web browser
 
     }
-
 }
