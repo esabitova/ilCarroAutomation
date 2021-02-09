@@ -26,7 +26,7 @@ public class RegistrationTestRefactored {
 
     @Test
     public void testRegistrationPositive() throws InterruptedException {
-        getSignUp();
+        openRegForm();
         fillRegForm();
         selectCheckBox();
         pause(2000);
@@ -37,7 +37,7 @@ public class RegistrationTestRefactored {
 
     @Test
     public void testRegistrationNegative() throws InterruptedException {
-        getSignUp();
+        openRegForm();
         fillIncorrectMailRegForm();
         selectCheckBox();
         pause(2000);
@@ -75,7 +75,7 @@ public class RegistrationTestRefactored {
         click(checkBox);
     }
 
-    public void getSignUp() {
+    public void openRegForm() {
         wd.findElement(By.cssSelector("[href='/signup']")).click();
     }
 
